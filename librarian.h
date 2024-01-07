@@ -2,7 +2,6 @@
 #define LIBRARIAN_H
 
 // The librarian.h header file.
-#include <iostream>
 #include "person.h"
 
 class Librarian: public Person{

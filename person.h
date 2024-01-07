@@ -2,7 +2,6 @@
 #define PERSON_H
 
 // The person.h header file.
-#include <iostream>
 #include <string>
 
 class Person{

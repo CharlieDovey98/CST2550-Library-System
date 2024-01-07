@@ -2,7 +2,6 @@
 #define MEMBER_H
 
 // The member.h header file.
-#include <iostream>
 #include <vector>
 #include "person.h"
 #include "book.h"
