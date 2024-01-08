@@ -4,6 +4,7 @@
 // The book.h header file.
 #include <string>
 #include <ctime>
+#include <vector>
 
 class Book{
 private:
@@ -17,14 +18,16 @@ private:
 
 public:
     Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName);
-    std::string getBookID();
-    std::string getBookName();
-    std::string getAuthorFirstName();
-    std::string getAuthorLastName();
-    time_t getDueDate();
+    std::string getBookID() const;
+    std::string getBookName() const;
+    std::string getAuthorFirstName() const;
+    std::string getAuthorLastName() const;
+    time_t getDueDate() const;
     void setDueDate(time_t dueDate);
     void returnBook();
     void borrowBook(Member *borrower, time_t dueDate);
 };
+
+std::vector<Book>& getBookList();
 
 #endif // BOOK_H

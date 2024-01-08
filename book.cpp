@@ -8,23 +8,23 @@ Book::Book(int bookID, std::string bookName, std::string authorFirstName, std::s
     this->authorLastName = authorLastName;
 };
 
-std::string Book::getBookID(){
+std::string Book::getBookID() const{
     return std::to_string(bookID);
 };
 
-std::string Book::getBookName(){
+std::string Book::getBookName() const{
     return bookName;
 };
 
-std::string Book::getAuthorFirstName(){
+std::string Book::getAuthorFirstName() const{
     return authorFirstName;
 };
 
-std::string Book::getAuthorLastName(){
+std::string Book::getAuthorLastName() const{
     return authorLastName;
 };
 
-time_t Book::getDueDate(){
+time_t Book::getDueDate() const{
     return dueDate;
 };
 
@@ -45,3 +45,11 @@ void Book::borrowBook(Member *borrower, time_t dueDate){
 // setBooksBorrowed()
 // setDueDate()
 };
+
+// This function returns a reference to the vector of member objects.
+std::vector<Book> &getBookList()
+{
+    // A vector to hold all of the member objects that will be added to the system.
+    static std::vector<Book> bookList;
+    return bookList;
+}
