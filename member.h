@@ -6,16 +6,19 @@
 #include "person.h"
 #include "book.h"
 
-class Member : public Person{
+class Member : public Person
+{
 private:
     int memberID;
     std::vector<Book *> booksLoaned;
 
 public:
     Member(int memberID, std::string name, std::string address, std::string email);
-    std::string getMemberID();
-    std::vector<Book *> getBooksBorrowed();
+    std::string getMemberID() const;
+    std::vector<Book *> getBooksBorrowed() const;
     void setBooksBorrowed(Book *book);
 };
+
+std::vector<Member> &getMemberList();
 
 #endif // MEMBER_H
