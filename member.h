@@ -2,9 +2,12 @@
 #define MEMBER_H
 
 // The member.h header file.
+#include <iostream>
 #include <vector>
 #include "person.h"
-#include "book.h"
+
+// Forward declaration to fix any circular dependancies, causing compiling errors.
+class Book;
 
 class Member : public Person
 {
