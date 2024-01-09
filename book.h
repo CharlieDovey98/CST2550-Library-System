@@ -2,9 +2,11 @@
 #define BOOK_H
 
 // The book.h header file.
+#include <iostream>
 #include <string>
 #include <ctime>
 #include <vector>
+#include "member.h"
 
 class Book{
 private:

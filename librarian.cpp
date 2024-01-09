@@ -1,4 +1,6 @@
 #include "librarian.h"
+#include <iostream>
+#include "book.h"
 
 // A derived class of the Person class. This class will inherit the members of the Person class.
 
@@ -41,10 +43,15 @@ Book *findBook(int bookID){
 }
 
 void Librarian::issueBook(int memberID, int bookID){
-    findMember(memberID);
-    findBook(bookID);
-    time_t nowPlusThreeDays = time(nullptr) + (3 * 24 * 60 * 60); // dueDate in days.
-   // book->borrowBook(findMember(memberID), nowPlusThreeDays);
+    Member* memberBorrowingBook = findMember(memberID);
+    std::cout << findMember(memberID);
+    Book* bookToBorrow = findBook(bookID);
+    std::cout << findBook(bookID);
+    if (memberBorrowingBook && bookToBorrow) {
+
+    time_t dueDate = time(nullptr) + (3 * 24 * 60 * 60); // dueDate in days.
+    bookToBorrow->borrowBook(memberBorrowingBook, dueDate);
+    }
 }
 
 void Librarian::returnBook(int memberID, int bookID){

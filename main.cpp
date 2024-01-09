@@ -134,123 +134,133 @@ void printBooks()
 
 int main(void)
 {
-    int menuChoice;
-
-    std::cout << "\nLibrary Management System V1.\n"
-              << std::endl;
-    librarianPortal();
-
-    if (bookDataFileFound == false)
+    while (true)
     {
-        // call the function to attain
-        attainTheLibraryInformationFile();
-        printBooks();
-    }
 
-    menuChoice = startMenu(menuChoice);
-    // userInputHandling(menuChoice);
+        int menuChoice;
 
-    if (menuChoice == 1) // Add a member functionality.
-    {
-        std::string name, address, email;
+        std::cout << "\nLibrary Management System V1.\n"
+                  << std::endl;
+        librarianPortal();
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Enter the member's name: ";
-        std::getline(std::cin, name);
-        // Validation.
-
-        std::cout << "Enter the member's address: ";
-        std::getline(std::cin, address);
-        // Validation.
-
-        std::cout << "Enter the member's email address: ";
-        std::getline(std::cin, email);
-        // Validation.
-
-        Member newMember(memberID, name, address, email); // Create new Member object.
-        Alexa.addMember(newMember);
-    
-        std::cout << "\nNew member added:\n";
-        printMemberDetails(memberID); // Print the members details that were just added to the system.
-        std::cout << "\nReturning to the menu\n";
-        memberID += 1;
-        main(); // Loop back to the main() function of the system. change this for a while loop.
-    }
-
-    if (menuChoice == 2) // View a members borrowed books functionality.
-    {
-        int memberIDForBorrowedBooks;
-        do
+        if (bookDataFileFound == false)
         {
-            std::cout << "Please enter the member's ID to view their currently borrowed books: ";
-            std::cin >> memberIDForBorrowedBooks;
-
-            // Validation checks using a do while loop.
-            // If the input is not an integer or is out of range get a new input from the user.
-            if (std::cin.fail()) // || member id does not exist?
-            {
-                std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-            else
-            {
-                return menuChoice; // Once a correct input has been attained, return the input.
-            }
-        } while (true);
-    }
-
-    if (menuChoice == 3) // Issue a book to a member functionality.
-    {
-        int memberIDToIssueABook;
-        do
-        {
-            std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
-            std::cin >> memberIDToIssueABook;
-
-            // Validation checks using a do while loop.
-            // If the input is not an integer or is out of range get a new input from the user.
-            if (std::cin.fail()) // || member id does not exist?
-            {
-                std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
-
-        /*Member *findMember(int memberID) {
-            std::vector<Member> &members = getMemberList();
-            for (Member &member : members)
-            {
-                if (member.getMemberID() == memberID)
-                {
-                    return &member; // Return a pointer to the member
-                }
-            }
-            return nullptr; // Return nullptr if no member with the given ID is found
+            // call the function to attain
+            attainTheLibraryInformationFile();
+            printBooks();
         }
 
-        Book *findBook(int bookID) {
-            std::vector<Book> &books = getBookList();
-            for (Book &book : books)
+        menuChoice = startMenu(menuChoice);
+        // userInputHandling(menuChoice);
+
+        if (menuChoice == 1) // Add a member functionality.
+        {
+            std::string name, address, email;
+
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Enter the member's name: ";
+            std::getline(std::cin, name);
+            // Validation.
+
+            std::cout << "Enter the member's address: ";
+            std::getline(std::cin, address);
+            // Validation.
+
+            std::cout << "Enter the member's email address: ";
+            std::getline(std::cin, email);
+            // Validation.
+
+            Member newMember(memberID, name, address, email); // Create new Member object.
+            Alexa.addMember(newMember);                       // Using librarian Alexa to add a new member.
+
+            std::cout << "\nNew member added:\n";
+            printMemberDetails(memberID); // Print the members details that were just added to the system.
+            std::cout << "\nReturning to the menu\n";
+            memberID += 1;
+        }
+
+        if (menuChoice == 2) // View a members borrowed books functionality.
+        {
+            int memberIDForBorrowedBooks;
+            do
             {
-                if (book.getBookID() == bookID)
+                std::cout << "Please enter the member's ID to view their currently borrowed books: ";
+                std::cin >> memberIDForBorrowedBooks;
+
+                // Validation checks using a do while loop.
+                // If the input is not an integer or is out of range get a new input from the user.
+                if (std::cin.fail()) // || member id does not exist?
                 {
-                    return &book; // Return a pointer to the book
+                    std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
+                else
+                {
+                    return memberIDForBorrowedBooks; // Once a correct input has been attained, return the input.
+                }
+            } while (true);
+            // look at members member.cpp look at getBooksBorrowed() member.cpp
+        }
+
+        if (menuChoice == 3) // Issue a book to a member functionality.
+        {
+            int memberIDToIssueABook, bookIDToIssueABook;
+            bool memberIDBoolean, bookIDBoolean;
+            do
+            {
+                std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
+                std::cin >> memberIDToIssueABook;
+
+                // Validation checks using a do while loop.
+                // If the input is not an integer or is out of range get a new input from the user.
+                if (std::cin.fail()) // || findMember(memberIDToIssueABook) == nullptr) // || member id does not exist?
+                {
+                    std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                else
+                {
+                    memberIDBoolean = true;
+                    break; // Once a correct input has been attained, break.
+                }
+
+            } while (true);
+
+            do
+            {
+                std::cout << "Please enter the bookID of the book that is being issued out: ";
+                std::cin >> bookIDToIssueABook;
+
+                // Validation checks using a do while loop.
+
+                // If the input is not an integer or is out of range get a new input from the user.
+                if (std::cin.fail()) // || findBook(bookIDToIssueABook) == nullptr) // || member id does not exist?
+                {
+                    std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                else{
+                bookIDBoolean = true;
+                break;}
+            } while (true);
+
+            if (memberIDBoolean && bookIDBoolean)
+            {
+                Alexa.issueBook(memberIDToIssueABook, bookIDToIssueABook);
             }
-            return nullptr; // Return nullptr if no book with the given ID is found
-        }*/
-    }
+        }
 
-    if (menuChoice == 4) // Return a book from a member functionality.
-    {
-        
-    }
+        if (menuChoice == 4) // Return a book from a member functionality.
+        {
+        }
 
-    if (menuChoice == 5) // Exit the system functionality
-    {
-        std::cout << "System Exiting" << std::endl;
-        exit(0);
+        if (menuChoice == 5) // Exit the system functionality.
+        {
+            std::cout << "System Exiting" << std::endl;
+            exit(0);
+        }
     }
 }
