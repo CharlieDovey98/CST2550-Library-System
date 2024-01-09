@@ -3,6 +3,7 @@
 
 // The librarian.h header file.
 #include "person.h"
+#include "member.h"
 
 class Librarian: public Person{
     private:
@@ -10,7 +11,7 @@ class Librarian: public Person{
         int salary;
     public:
         Librarian(int staffID, std::string name, std::string address, std::string email, int salary);
-        void addMember();
+        void addMember(Member &newMember);
         void issueBook(int memberID, int bookID);
         void returnBook(int memberID, int bookID);
         void displayBorrowedBooks(int memberID);

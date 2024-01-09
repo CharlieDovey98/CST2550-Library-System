@@ -46,10 +46,10 @@ void Book::borrowBook(Member *borrower, time_t dueDate){
 // setDueDate()
 };
 
-// This function returns a reference to the vector of member objects.
+// This function returns a reference to the vector of book objects.
 std::vector<Book> &getBookList()
 {
-    // A vector to hold all of the member objects that will be added to the system.
+    // A vector to hold all of the book objects that will be added to the system.
     static std::vector<Book> bookList;
     return bookList;
 }

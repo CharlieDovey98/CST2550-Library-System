@@ -91,7 +91,7 @@ void attainTheLibraryInformationFile()
     std::string line = "";
     inputFile.open(fileName);
     std::getline(inputFile, line); // Attain the first line from the document, the cell headings.
-    line = ""; // Discard the first headings line, as we only want to add books to the book vector.
+    line = "";                     // Discard the first headings line, as we only want to add books to the book vector.
 
     while (std::getline(inputFile, line))
     {
@@ -123,7 +123,7 @@ void attainTheLibraryInformationFile()
 void printBooks()
 {
     const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books
-    for (const Book &book : books) // For loop through to print each book for testing purposes. This is not used in the main funcionality of the program.
+    for (const Book &book : books)                  // For loop through to print each book for testing purposes. This is not used in the main funcionality of the program.
     {
         std::cout << "Book ID: " << book.getBookID() << ", "
                   << book.getBookName() << ", "
@@ -152,7 +152,6 @@ int main(void)
 
     if (menuChoice == 1) // Add a member functionality.
     {
-
         std::string name, address, email;
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -169,13 +168,13 @@ int main(void)
         // Validation.
 
         Member newMember(memberID, name, address, email); // Create new Member object.
-        getMemberList().push_back(newMember);             // Add new Member to the member list vector.
-
+        Alexa.addMember(newMember);
+    
         std::cout << "\nNew member added:\n";
         printMemberDetails(memberID); // Print the members details that were just added to the system.
         std::cout << "\nReturning to the menu\n";
         memberID += 1;
-        main(); // Loop back to the main() function of the system.
+        main(); // Loop back to the main() function of the system. change this for a while loop.
     }
 
     if (menuChoice == 2) // View a members borrowed books functionality.
@@ -218,11 +217,35 @@ int main(void)
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
         } while (true);
+
+        /*Member *findMember(int memberID) {
+            std::vector<Member> &members = getMemberList();
+            for (Member &member : members)
+            {
+                if (member.getMemberID() == memberID)
+                {
+                    return &member; // Return a pointer to the member
+                }
+            }
+            return nullptr; // Return nullptr if no member with the given ID is found
+        }
+
+        Book *findBook(int bookID) {
+            std::vector<Book> &books = getBookList();
+            for (Book &book : books)
+            {
+                if (book.getBookID() == bookID)
+                {
+                    return &book; // Return a pointer to the book
+                }
+            }
+            return nullptr; // Return nullptr if no book with the given ID is found
+        }*/
     }
 
     if (menuChoice == 4) // Return a book from a member functionality.
     {
-
+        
     }
 
     if (menuChoice == 5) // Exit the system functionality
