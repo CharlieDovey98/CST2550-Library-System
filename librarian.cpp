@@ -166,8 +166,7 @@ void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     {
         double daysLate = difftime(currentTime, bookBeingReturned->getDueDate()) / (60 * 60 * 24);
         double fine = daysLate * 1;
-    std::cout << "Days late " << daysLate << "    Fine " << fine << std::endl;
-
+        std::cout << "Days late " << daysLate << "    Fine " << fine << std::endl;
         std::cout << "Book is returned late. Fine due: $" << fine << std::endl;
     }
 }

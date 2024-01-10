@@ -54,25 +54,19 @@ void attainTheLibraryInformationFile()
     std::string fileName;
     std::ifstream inputFile;
 
-    do
-    {
         std::cout << "Please enter the book data filename for the library management system\n(e.g. librarybooks.csv): " << std::endl;
         std::getline(std::cin, fileName);
 
-        // Validation checks using a do while loop.
         // If the input is not an integer or is out of range get a new input from the user.
-        if (std::cin.fail()) // Validation if the file exists?.
+        while (std::cin.fail()) // Validation checks using a while loop.
         {
             std::cout << "Invalid filename. enter the book data filename for the library management system (e.g. librarybooks.csv): " << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else
-        {
+        
             bookDataFileFound = true;
-            break; // Once a correct input has been attained, break.
+            return; // Once a correct input has been attained, break.
         }
-    } while (true);
 
     std::string line = "";
     inputFile.open(fileName);
@@ -131,14 +125,14 @@ int main(void)
 
         if (bookDataFileFound == false)
         {
-            // call the function to attain
+            // A call the to the function to attain the library's book information.
             attainTheLibraryInformationFile();
+            // A call to the function to print the now attained books the library system has in stock.
             printBooks();
         }
 
         menuChoice = startMenu(menuChoice);
-        // userInputHandling(menuChoice);
-
+        
         if (menuChoice == 1) // Add a member functionality.
         {
             Alexa.addMember(); // Using librarian Alexa to add a new member.
@@ -151,8 +145,7 @@ int main(void)
             std::cout << "Please enter the member's ID to view their currently borrowed books: ";
             std::cin >> memberIDForBorrowedBooks;
 
-            // Validation checks using a do while loop.
-            // If the input is not an integer or is out of range get a new input from the user.
+            // Validation checks using a while loop.
             while (std::cin.fail() || Alexa.findMember(memberIDForBorrowedBooks) == nullptr) // If memberID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
@@ -172,8 +165,7 @@ int main(void)
             std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
             std::cin >> memberIDToIssueABook;
 
-            // Validation checks using a do while loop.
-            // If the input is not an integer or is out of range get a new input from the user.
+            // Validation checks using a while loop.
             while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
@@ -187,7 +179,7 @@ int main(void)
             std::cout << "Please enter the bookID of the book that is being issued out: ";
             std::cin >> bookIDToIssueABook;
 
-            // If the input is not an integer or is out of range get a new input from the user.
+            // Validation checks using a while loop.
             while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
@@ -213,8 +205,7 @@ int main(void)
             std::cout << "Please enter the memberID of the member that wants to return a book: ";
             std::cin >> memberIDToIssueABook;
 
-            // Validation checks using a do while loop.
-            // If the input is not an integer or is out of range get a new input from the user.
+            // Validation checks using a while loop.
             while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
@@ -228,7 +219,7 @@ int main(void)
             std::cout << "Please enter the bookID of the book that is being returned: ";
             std::cin >> bookIDToIssueABook;
 
-            // If the input is not an integer or is out of range get a new input from the user.
+            // Validation checks using a while loop.
             while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
