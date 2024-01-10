@@ -14,7 +14,11 @@ std::string Member::getMemberID() const{
     return std::to_string(memberID);
 }
 
-std::vector<Book *> Member::getBooksBorrowed() const{
+std::vector<Book *> Member::getBooksBorrowed(){
+    return booksLoaned;
+}
+
+std::vector<Book *>&  Member::getBooksBorrowedReference(){
     return booksLoaned;
 }
 

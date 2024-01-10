@@ -1,9 +1,14 @@
+// Library Management System 
+
+// Include all the libraries for the code to run
 #include <iostream>
 #include <string>
 #include <vector>
 #include <limits>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+//Include the header files of the classes.
 #include "person.h"
 #include "book.h"
 #include "member.h"
@@ -148,7 +153,7 @@ int main(void)
 
             // Validation checks using a do while loop.
             // If the input is not an integer or is out of range get a new input from the user.
-            while (std::cin.fail()) // || member id does not exist?
+            while (std::cin.fail() || Alexa.findMember(memberIDForBorrowedBooks) == nullptr) // If memberID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
                 std::cin.clear();
@@ -169,7 +174,7 @@ int main(void)
 
             // Validation checks using a do while loop.
             // If the input is not an integer or is out of range get a new input from the user.
-            while (std::cin.fail()) // || findMember(memberIDToIssueABook) == nullptr) // || member id does not exist?
+            while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
                 std::cin.clear();
@@ -182,10 +187,8 @@ int main(void)
             std::cout << "Please enter the bookID of the book that is being issued out: ";
             std::cin >> bookIDToIssueABook;
 
-            // Validation checks using a do while loop.
-
             // If the input is not an integer or is out of range get a new input from the user.
-            while (std::cin.fail()) // || findBook(bookIDToIssueABook) == nullptr) // || member id does not exist?
+            while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
             {
                 std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
                 std::cin.clear();
@@ -204,6 +207,43 @@ int main(void)
 
         if (menuChoice == 4) // Return a book from a member functionality.
         {
+            int memberIDToIssueABook, bookIDToIssueABook;
+            bool memberIDBoolean, bookIDBoolean;
+
+            std::cout << "Please enter the memberID of the member that wants to return a book: ";
+            std::cin >> memberIDToIssueABook;
+
+            // Validation checks using a do while loop.
+            // If the input is not an integer or is out of range get a new input from the user.
+            while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
+            {
+                std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Please enter the memberID of the member that wants to return a book: ";
+                std::cin >> memberIDToIssueABook;
+            }
+            memberIDBoolean = true;
+
+            std::cout << "Please enter the bookID of the book that is being returned: ";
+            std::cin >> bookIDToIssueABook;
+
+            // If the input is not an integer or is out of range get a new input from the user.
+            while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
+            {
+                std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Please enter the bookID of the book that is being returned: ";
+                std::cin >> bookIDToIssueABook;
+            }
+
+            bookIDBoolean = true;
+
+            if (memberIDBoolean && bookIDBoolean)
+            {
+                Alexa.returnBook(memberIDToIssueABook, bookIDToIssueABook);
+            }
         }
 
         if (menuChoice == 5) // Exit the system functionality.

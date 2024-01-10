@@ -9,8 +9,7 @@
 // Forward declaration to fix any circular dependancies, causing compiling errors.
 class Book;
 
-class Member : public Person
-{
+class Member : public Person{
 private:
     int memberID;
     std::vector<Book *> booksLoaned;
@@ -18,7 +17,8 @@ private:
 public:
     Member(int memberID, std::string name, std::string address, std::string email);
     std::string getMemberID() const;
-    std::vector<Book *> getBooksBorrowed() const;
+    std::vector<Book *> getBooksBorrowed();
+    std::vector<Book *>& getBooksBorrowedReference();
     void setBooksBorrowed(Book *book);
 };
 

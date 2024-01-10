@@ -26,7 +26,7 @@ public:
     std::string getAuthorLastName() const;
     time_t getDueDate() const;
     void setDueDate(time_t dueDate);
-    void returnBook();
+    void returnBook(int bookID, int memberID);
     void borrowBook(Member *borrower, time_t dueDate);
 };
 

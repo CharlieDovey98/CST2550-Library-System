@@ -27,21 +27,16 @@ time_t Book::getDueDate() const{
     return dueDate;
 }
 
-// set the due date for 3 days from date of issue to the member.
+// Set the due date for 3 days from date of issue to the member.
 void Book::setDueDate(time_t dueDate){
     this->dueDate = dueDate;
 }
 
-void Book::returnBook(){
-// cout enter the bookID that is being returned: 
-// get due date
-// is it past the due date
-// calculateFine()
-// this book has been returned
+void Book::returnBook(int bookID, int memberID){
+    std::cout << "Book ID " << bookID << " has been successfully returned by Member ID " << memberID << std::endl;
 }
 
 void Book::borrowBook(Member *borrower, time_t dueDate){
-    
     this->borrower = borrower;
     setDueDate(dueDate);
     // Set the due date for dueDate days from the current date.
@@ -49,8 +44,7 @@ void Book::borrowBook(Member *borrower, time_t dueDate){
 }
 
 // This function returns a reference to the vector of book objects.
-std::vector<Book> &getBookList()
-{
+std::vector<Book> &getBookList(){
     // A vector to hold all of the book objects that will be added to the system.
     static std::vector<Book> bookList;
     return bookList;
