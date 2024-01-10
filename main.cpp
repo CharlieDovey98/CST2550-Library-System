@@ -182,70 +182,83 @@ int main(void)
         if (menuChoice == 2) // View a members borrowed books functionality.
         {
             int memberIDForBorrowedBooks;
-            do
+
+            std::cout << "Please enter the member's ID to view their currently borrowed books: ";
+            std::cin >> memberIDForBorrowedBooks;
+
+            // Validation checks using a do while loop.
+            // If the input is not an integer or is out of range get a new input from the user.
+            while (std::cin.fail()) // || member id does not exist?
             {
+                std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Please enter the member's ID to view their currently borrowed books: ";
                 std::cin >> memberIDForBorrowedBooks;
-
-                // Validation checks using a do while loop.
-                // If the input is not an integer or is out of range get a new input from the user.
-                if (std::cin.fail()) // || member id does not exist?
+            }
+            Member *member = Alexa.findMember(memberIDForBorrowedBooks);
+            if (member != nullptr) // If member is found, member is not equal to nullpointer.
+            {
+                std::vector<Book *> borrowedBooks = member->getBooksBorrowed();
+                if (borrowedBooks.empty())
                 {
-                    std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "No books currently borrowed by member ID " << memberIDForBorrowedBooks << std::endl;
                 }
                 else
                 {
-                    return memberIDForBorrowedBooks; // Once a correct input has been attained, return the input.
+                    std::cout << "Borrowed books by member ID " << memberIDForBorrowedBooks << ":" << std::endl;
+                    for (Book *book : borrowedBooks)
+                    {
+                        std::cout << "Book ID: " << book->getBookID() << ", "
+                                  << "Name: " << book->getBookName() << ", "
+                                  << "Author: " << book->getAuthorFirstName() << " " << book->getAuthorLastName() << std::endl;
+                    }
                 }
-            } while (true);
+            }
+            else
+            {
+                std::cout << "Member with ID " << memberIDForBorrowedBooks << " not found." << std::endl;
+            }
             // look at members member.cpp look at getBooksBorrowed() member.cpp
+            std::cout << "member details here?";
         }
 
         if (menuChoice == 3) // Issue a book to a member functionality.
         {
             int memberIDToIssueABook, bookIDToIssueABook;
             bool memberIDBoolean, bookIDBoolean;
-            do
+
+            std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
+            std::cin >> memberIDToIssueABook;
+
+            // Validation checks using a do while loop.
+            // If the input is not an integer or is out of range get a new input from the user.
+            while (std::cin.fail()) // || findMember(memberIDToIssueABook) == nullptr) // || member id does not exist?
             {
+                std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
                 std::cin >> memberIDToIssueABook;
+            }
+            memberIDBoolean = true;
 
-                // Validation checks using a do while loop.
-                // If the input is not an integer or is out of range get a new input from the user.
-                if (std::cin.fail()) // || findMember(memberIDToIssueABook) == nullptr) // || member id does not exist?
-                {
-                    std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-                else
-                {
-                    memberIDBoolean = true;
-                    break; // Once a correct input has been attained, break.
-                }
+            std::cout << "Please enter the bookID of the book that is being issued out: ";
+            std::cin >> bookIDToIssueABook;
 
-            } while (true);
+            // Validation checks using a do while loop.
 
-            do
+            // If the input is not an integer or is out of range get a new input from the user.
+            while (std::cin.fail()) // || findBook(bookIDToIssueABook) == nullptr) // || member id does not exist?
             {
+                std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Please enter the bookID of the book that is being issued out: ";
                 std::cin >> bookIDToIssueABook;
+            }
 
-                // Validation checks using a do while loop.
-
-                // If the input is not an integer or is out of range get a new input from the user.
-                if (std::cin.fail()) // || findBook(bookIDToIssueABook) == nullptr) // || member id does not exist?
-                {
-                    std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-                else{
-                bookIDBoolean = true;
-                break;}
-            } while (true);
+            bookIDBoolean = true;
 
             if (memberIDBoolean && bookIDBoolean)
             {

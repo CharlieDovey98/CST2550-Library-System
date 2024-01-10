@@ -16,7 +16,7 @@ void Librarian::addMember(Member &newMember){
     getMemberList().push_back(newMember); // Add new Member to the member list vector.
 }
 
-Member *findMember(int memberID){
+Member* Librarian::findMember(int memberID){
     std::vector<Member> &members = getMemberList();
     std::string memberIDAsAString = std::to_string(memberID);
     for (Member &member : members) // For all members in the members vector, check to see if the membersID matches the parameter bookID provided.
@@ -44,10 +44,13 @@ Book *findBook(int bookID){
 
 void Librarian::issueBook(int memberID, int bookID){
     Member* memberBorrowingBook = findMember(memberID);
-    std::cout << findMember(memberID);
     Book* bookToBorrow = findBook(bookID);
-    std::cout << findBook(bookID);
+    
     if (memberBorrowingBook && bookToBorrow) {
+        std::cout << "Member Name: " << memberBorrowingBook->getName() << std::endl;
+        std::cout << "Member ID: " << memberBorrowingBook->getMemberID() << std::endl;
+        std::cout << "Book Title: " << bookToBorrow->getBookName() << std::endl;
+        std::cout << "Book ID: " << bookToBorrow->getBookID() << std::endl;
 
     time_t dueDate = time(nullptr) + (3 * 24 * 60 * 60); // dueDate in days.
     bookToBorrow->borrowBook(memberBorrowingBook, dueDate);
