@@ -9,10 +9,8 @@
 #include "member.h"
 #include "librarian.h"
 
-int memberID = 101;
 bool bookDataFileFound = false;
 
-Librarian Alexa(1001, "Alexa A", "410 Terry Ave N, Seattle 98109, WA.", "reply@amazon.com", 100000);
 void librarianPortal()
 {
     std::cout << "Welcome librarian: " << Alexa.getName() << ", ID:" << Alexa.getStaffID() << "." << std::endl;
@@ -44,23 +42,6 @@ int startMenu(int menuChoice)
             return menuChoice; // Once a correct input has been attained, return the input.
         }
     } while (true);
-}
-
-void printMemberDetails(int memberID)
-{
-    const std::vector<Member> &members = getMemberList();
-    for (const Member &member : members)
-    {
-        if (std::string(member.getMemberID()) == std::to_string(memberID))
-        {
-            std::cout << "Member ID: " << member.getMemberID() << ", "
-                      << "Name: " << member.getName() << ", "
-                      << "Address: " << member.getAddress() << ", "
-                      << "Email: " << member.getEmail() << std::endl;
-            return;
-        }
-    }
-    std::cout << "Member with ID " << memberID << " not found." << std::endl;
 }
 
 void attainTheLibraryInformationFile()
@@ -155,28 +136,7 @@ int main(void)
 
         if (menuChoice == 1) // Add a member functionality.
         {
-            std::string name, address, email;
-
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Enter the member's name: ";
-            std::getline(std::cin, name);
-            // Validation.
-
-            std::cout << "Enter the member's address: ";
-            std::getline(std::cin, address);
-            // Validation.
-
-            std::cout << "Enter the member's email address: ";
-            std::getline(std::cin, email);
-            // Validation.
-
-            Member newMember(memberID, name, address, email); // Create new Member object.
-            Alexa.addMember(newMember);                       // Using librarian Alexa to add a new member.
-
-            std::cout << "\nNew member added:\n";
-            printMemberDetails(memberID); // Print the members details that were just added to the system.
-            std::cout << "\nReturning to the menu\n";
-            memberID += 1;
+            Alexa.addMember(); // Using librarian Alexa to add a new member.
         }
 
         if (menuChoice == 2) // View a members borrowed books functionality.
@@ -196,31 +156,7 @@ int main(void)
                 std::cout << "Please enter the member's ID to view their currently borrowed books: ";
                 std::cin >> memberIDForBorrowedBooks;
             }
-            Member *member = Alexa.findMember(memberIDForBorrowedBooks);
-            if (member != nullptr) // If member is found, member is not equal to nullpointer.
-            {
-                std::vector<Book *> borrowedBooks = member->getBooksBorrowed();
-                if (borrowedBooks.empty())
-                {
-                    std::cout << "No books currently borrowed by member ID " << memberIDForBorrowedBooks << std::endl;
-                }
-                else
-                {
-                    std::cout << "Borrowed books by member ID " << memberIDForBorrowedBooks << ":" << std::endl;
-                    for (Book *book : borrowedBooks)
-                    {
-                        std::cout << "Book ID: " << book->getBookID() << ", "
-                                  << "Name: " << book->getBookName() << ", "
-                                  << "Author: " << book->getAuthorFirstName() << " " << book->getAuthorLastName() << std::endl;
-                    }
-                }
-            }
-            else
-            {
-                std::cout << "Member with ID " << memberIDForBorrowedBooks << " not found." << std::endl;
-            }
-            // look at members member.cpp look at getBooksBorrowed() member.cpp
-            std::cout << "member details here?";
+            Alexa.displayBorrowedBooks(memberIDForBorrowedBooks);
         }
 
         if (menuChoice == 3) // Issue a book to a member functionality.
