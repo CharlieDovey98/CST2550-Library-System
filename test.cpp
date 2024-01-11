@@ -8,12 +8,13 @@
 
 // Test case for functions in the Book class.
 TEST_CASE("Book get functionality", "[Book]"){
-    Book book(100, "The Test Book", "Testing", "Author");
+    Book book(100, "The Test Book", "Testing", "Author", false);
 
     REQUIRE(book.getBookID() == "100");
     REQUIRE(book.getBookName() == "The Test Book");
     REQUIRE(book.getAuthorFirstName() == "Testing");
     REQUIRE(book.getAuthorLastName() == "Author");
+    REQUIRE(book.isBookIssued() == false);
 }
 
 // Test case for functions in the member class.
