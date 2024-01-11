@@ -1,7 +1,7 @@
+// Library Management System, The book.h header file.
 #ifndef BOOK_H
 #define BOOK_H
 
-// The book.h header file.
 #include <iostream>
 #include <string>
 #include <ctime>

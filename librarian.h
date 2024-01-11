@@ -1,7 +1,7 @@
+// Library Management System, The librarian.h header file.
 #ifndef LIBRARIAN_H
 #define LIBRARIAN_H
 
-// The librarian.h header file.
 #include <iostream>
 #include <ctime>
 #include "person.h"

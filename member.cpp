@@ -1,6 +1,8 @@
-#include "member.h"
-
+// Library Management System, member.cpp
 // A derived class of the Person class. This class will inherit the members of the Person class.
+
+//Include the header file of the member class.
+#include "member.h"
 
 // Construct a member using the person class.
 Member::Member(int memberID, std::string name, std::string address, std::string email){

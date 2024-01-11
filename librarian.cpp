@@ -1,13 +1,16 @@
-#include "librarian.h"
+// Library Management System, librarian.cpp
+// A derived class of the Person class. This class will inherit the members of the Person class.
+
+// Include all the libraries for the code to run.
 #include <iostream>
-#include <limits>
 #include <algorithm>
+#include <limits>
+//Include the header files of the classes.
+#include "librarian.h"
 #include "member.h"
 #include "book.h"
 
 int memberID = 101;
-
-// A derived class of the Person class. This class will inherit the members of the Person class.
 
 Librarian::Librarian(int staffID, std::string name, std::string address, std::string email, int salary){
     this->staffID = staffID;
@@ -166,6 +169,7 @@ void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     {
         double daysLate = difftime(currentTime, bookBeingReturned->getDueDate()) / (60 * 60 * 24);
         double fine = daysLate * 1;
+        std::cout << "Member with ID: " << memberID << std::endl;
         std::cout << "Days late " << daysLate << "    Fine " << fine << std::endl;
         std::cout << "Book is returned late. Fine due: $" << fine << std::endl;
     }

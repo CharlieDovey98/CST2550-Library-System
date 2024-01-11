@@ -1,7 +1,7 @@
+// Library Management System, The person.h header file.
 #ifndef PERSON_H
 #define PERSON_H
 
-// The person.h header file.
 #include <string>
 
 class Person{

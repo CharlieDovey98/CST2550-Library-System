@@ -1,3 +1,6 @@
+// Library Management System, book.cpp
+
+//Include the header file of the book class.
 #include "book.h"
 
 Book::Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName){

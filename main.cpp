@@ -1,6 +1,6 @@
-// Library Management System 
+// Library Management System, main.cpp
 
-// Include all the libraries for the code to run
+// Include all the libraries for the code to run.
 #include <iostream>
 #include <string>
 #include <vector>
@@ -29,24 +29,18 @@ int startMenu(int menuChoice)
               << "\n    [3] Issue a book."
               << "\n    [4] Return a book."
               << "\n    [5] Exit the system." << std::endl;
-    do
-    {
-        std::cout << "\nPlease enter your choice as a number: ";
-        std::cin >> menuChoice;
 
-        // Validation checks using a do while loop.
-        // If the input is not an integer or is out of range get a new input from the user.
-        if (std::cin.fail() || menuChoice < 1 || menuChoice > 5)
-        {
-            std::cout << "Invalid choice. Please enter a number between 1 and 5." << std::endl;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else
-        {
-            return menuChoice; // Once a correct input has been attained, return the input.
-        }
-    } while (true);
+    std::cout << "\nPlease enter your choice as a number: ";
+    std::cin >> menuChoice;
+
+    // If the input is not an integer or is out of range get a new input from the user.
+    while (std::cin.fail() || menuChoice < 1 || menuChoice > 5) // Validation checks using a do while loop.
+    {
+        std::cout << "Invalid choice. Please enter a number between 1 and 5." << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    return menuChoice; // Once a correct input has been attained, return the input.
 }
 
 void attainTheLibraryInformationFile()
@@ -54,22 +48,27 @@ void attainTheLibraryInformationFile()
     std::string fileName;
     std::ifstream inputFile;
 
-        std::cout << "Please enter the book data filename for the library management system\n(e.g. librarybooks.csv): " << std::endl;
-        std::getline(std::cin, fileName);
+    std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
+    std::getline(std::cin, fileName);
 
-        // If the input is not an integer or is out of range get a new input from the user.
-        while (std::cin.fail()) // Validation checks using a while loop.
-        {
-            std::cout << "Invalid filename. enter the book data filename for the library management system (e.g. librarybooks.csv): " << std::endl;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
-            bookDataFileFound = true;
-            return; // Once a correct input has been attained, break.
-        }
+    // Check if the filename has .csv file extension.
+    while (fileName.size() <= 4 || fileName.substr(fileName.size() - 4) != ".csv")
+    {
+        std::cout << "Invalid file extension. Please ensure the file is a .csv file." << std::endl;
+        std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
+        std::getline(std::cin, fileName);
+    }
+    inputFile.open(fileName);
+    while (!inputFile.is_open())
+    {
+        std::cerr << "Failed to open file: " << fileName << std::endl;
+        std::cerr << "Please check if the file exists in the current directory." << std::endl;
+        std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
+        std::getline(std::cin, fileName);
+    }
+    bookDataFileFound = true;
 
     std::string line = "";
-    inputFile.open(fileName);
     std::getline(inputFile, line); // Attain the first line from the document, the cell headings.
     line = "";                     // Discard the first headings line, as we only want to add books to the book vector.
 
@@ -102,7 +101,7 @@ void attainTheLibraryInformationFile()
 
 void printBooks()
 {
-    const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books
+    const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books.
     for (const Book &book : books)                  // For loop through to print each book for testing purposes. This is not used in the main funcionality of the program.
     {
         std::cout << "Book ID: " << book.getBookID() << ", "
@@ -128,7 +127,7 @@ int main(void)
             // A call the to the function to attain the library's book information.
             attainTheLibraryInformationFile();
             // A call to the function to print the now attained books the library system has in stock.
-            printBooks();
+            //printBooks();
         }
 
         menuChoice = startMenu(menuChoice);

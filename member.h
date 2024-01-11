@@ -1,7 +1,7 @@
+// Library Management System, The member.h header file.
 #ifndef MEMBER_H
 #define MEMBER_H
 
-// The member.h header file.
 #include <iostream>
 #include <vector>
 #include "person.h"
