@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <ctime>
+#include <regex>
 #include "person.h"
 #include "member.h"
 #include "book.h"
