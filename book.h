@@ -17,9 +17,10 @@ private:
     std::string bookType;
     time_t dueDate;
     class Member *borrower;
+    bool isIssued;
 
 public:
-    Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName);
+    Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName, bool isIssued);
     std::string getBookID() const;
     std::string getBookName() const;
     std::string getAuthorFirstName() const;
@@ -28,6 +29,8 @@ public:
     void setDueDate(time_t dueDate);
     void returnBook(int bookID, int memberID);
     void borrowBook(Member *borrower, time_t dueDate);
+    bool isBookIssued() const;
+    void setBookAsIssued(bool bookIssued);
 };
 
 std::vector<Book>& getBookList();

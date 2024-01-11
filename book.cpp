@@ -3,11 +3,12 @@
 //Include the header file of the book class.
 #include "book.h"
 
-Book::Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName){
+Book::Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName, bool isIssued){
     this->bookID = bookID;
     this->bookName = bookName;
     this->authorFirstName = authorFirstName;
     this->authorLastName = authorLastName;
+    this->isIssued = isIssued;
 };
 
 std::string Book::getBookID() const{
@@ -30,19 +31,28 @@ time_t Book::getDueDate() const{
     return dueDate;
 }
 
-// Set the due date for 3 days from date of issue to the member.
+bool Book::isBookIssued() const{
+    return isIssued;
+}
+
+void Book::setBookAsIssued(bool bookIssued){
+    this->isIssued = bookIssued;
+}
+
+// Set the due date for the book being issued to the member.
 void Book::setDueDate(time_t dueDate){
     this->dueDate = dueDate;
 }
 
 void Book::returnBook(int bookID, int memberID){
+    setBookAsIssued(true);
     std::cout << "Book ID " << bookID << " has been successfully returned by Member ID " << memberID << std::endl;
+    std::cout << "\n-----------Returning to the menu----------";
 }
 
 void Book::borrowBook(Member *borrower, time_t dueDate){
     this->borrower = borrower;
     setDueDate(dueDate);
-    // Set the due date for dueDate days from the current date.
     borrower->setBooksBorrowed(this);
 }
 
