@@ -110,11 +110,18 @@ Book *Librarian::findBook(int bookID){
     return nullptr; // Return nullptr if no book with the user input bookID is found.
 }
 
-void Librarian::issueBook(int memberID, int bookID){
+void Librarian::issueBook(int memberID, int bookID)
+{
     Member *memberBorrowingBook = findMember(memberID);
     Book *bookToBorrow = findBook(bookID);
 
-    if (memberBorrowingBook && bookToBorrow){
+    if (bookToBorrow->isBookIssued())
+    {
+        std::cout << "The book with ID " << bookID << " is already issued and cannot be borrowed at the moment." << std::endl;
+        return;
+    }
+    else
+    {
         std::cout << "\nMember Name: " << memberBorrowingBook->getName() << std::endl;
         std::cout << "Member ID: " << memberBorrowingBook->getMemberID() << std::endl;
         std::cout << "Book Title: " << bookToBorrow->getBookName() << std::endl;
@@ -126,10 +133,12 @@ void Librarian::issueBook(int memberID, int bookID){
         time_t dueDate = currentTime + (3 * 24 * 60 * 60); // A calculation to attain the current system time + 3 days to set the loan period for 3 days.
         std::cout << "The book's due date is: " << ctime(&dueDate);
 
+        bookToBorrow->setBookAsIssued(true); // The book issued boolean will now be set to true so other users cannot loan it.
         bookToBorrow->borrowBook(memberBorrowingBook, dueDate); // Call borrowBook and pass the dueDate and member for it to be set.
         std::cout << "Book ID " << bookID << " has been successfully issue to Member ID " << memberID << std::endl;
     }
 }
+
 void Librarian::returnBook(int memberID, int bookID){
     // Find the member and the book by their IDs.
     Member* memberReturningBook = findMember(memberID);
@@ -146,13 +155,15 @@ void Librarian::returnBook(int memberID, int bookID){
 
     // Attempt to find the book in the member's list of borrowed books.
     auto& borrowedBooks = memberReturningBook->getBooksBorrowedReference();
-    auto it = std::find(borrowedBooks.begin(), borrowedBooks.end(), bookBeingReturned);
+    // Use auto to find the book within borrowedBooks. 
+    auto bookSearch = std::find(borrowedBooks.begin(), borrowedBooks.end(), bookBeingReturned);
 
     // If the book is found in the member's borrowed books.
-    if (it != borrowedBooks.end()) {
-        borrowedBooks.erase(it);// Remove the book from the member's borrowed books.
+    if (bookSearch != borrowedBooks.end()) {
+        borrowedBooks.erase(bookSearch);// Remove the book from the member's borrowed books.
         calculateFine(memberID, bookBeingReturned); // Calculate the fine for the member if the book is past its due date.
         bookBeingReturned->returnBook(bookID, memberID); // Return the book.
+        bookBeingReturned->setBookAsIssued(false);
     } else {
         std::cout << "Member ID " << memberID << " did not borrow book ID " << bookID << std::endl;
     }
@@ -160,7 +171,7 @@ void Librarian::returnBook(int memberID, int bookID){
 
 void Librarian::displayBorrowedBooks(int memberID)
 {
-
+    
     Member *member = Alexa.findMember(memberID);
     if (member != nullptr) // If member is not equal to nullpointer.
     {
@@ -175,9 +186,11 @@ void Librarian::displayBorrowedBooks(int memberID)
             Alexa.printMemberDetails(memberID);
             for (Book *book : borrowedBooks)
             {
+                time_t date = book->getDueDate();
                 std::cout << "\nBook ID: " << book->getBookID() << ", "
                           << "Name: " << book->getBookName() << ", "
-                          << "Author: " << book->getAuthorFirstName() << " " << book->getAuthorLastName() << std::endl;
+                          << "Author: " << book->getAuthorFirstName() << " " << book->getAuthorLastName() << ", "
+                          << "This book is due: " << ctime(&date);
             }
             std::cout << "\n-----------Returning to the menu----------";
         }
@@ -191,8 +204,7 @@ void Librarian::displayBorrowedBooks(int memberID)
 // A function to Calculate fine if the book is overdue.
 void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     time_t currentTime = time(nullptr); // The current system time.
-    std::cout << "Current time: " << ctime(&currentTime) << std::endl;
-    std::cout << "The books due date: " << bookBeingReturned->getDueDate() << std::endl;
+    std::cout << "Current time of return: " << ctime(&currentTime) << std::endl;
     if (currentTime > bookBeingReturned->getDueDate()){
         double daysLate = difftime(currentTime, bookBeingReturned->getDueDate()) / (60 * 60 * 24);
         double fine = daysLate * 1;
@@ -201,6 +213,7 @@ void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
         std::cout << "Fine due: £" << fine << std::endl;
         std::cout << "MemberID: " << memberID << "returning: " << bookBeingReturned << std::endl;
     }
+    std::cout << "You are within the books due date, so you will not incur a fine" << std::endl;
 }
 
 int Librarian::getStaffID(){
