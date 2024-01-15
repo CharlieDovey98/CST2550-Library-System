@@ -2,7 +2,7 @@
 This repository contains the files for CST2550 Coursework 1 coded in C++. A simulation of a small library tracking system for its members and the books borrowed by them.
 Coded by Charlie Dovey M00843428.
 
-# Please ensure .csv files are placed in the main directory, where the makefile is.
+Please ensure .csv files are placed in the main directory, where the makefile is.
 
 
 # Terminal commands.

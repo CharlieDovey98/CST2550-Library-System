@@ -56,7 +56,7 @@ void attainTheLibraryInformationFile() {
     std::getline(std::cin, fileName);
 
     // A validation check using a while loop, guard statement.
-    while (fileName.size() <= 4 || fileName.substr(fileName.size() - 4) != ".csv") { // Check if the filename has .csv file extension.
+    while (fileName.size() <= 4 || fileName.substr(fileName.size() - 4) != ".csv") { // Check if the filename has .csv file extension or is longer than length 4 (which is ".csv").
         std::cout << "Invalid file extension. Please ensure the file is a .csv file." << std::endl;
         std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
         std::getline(std::cin, fileName);
@@ -105,8 +105,8 @@ void attainTheLibraryInformationFile() {
     std::cout << "\nBooks added successfully\n";
 }
 
-// This function prints out each line of the .csv file after the file has successfully been opened and read.
-// This is not used in the main funcionality of the program. This function aids bug testing.
+// This function prints out each book that has been read in from the .csv file after the file has successfully been opened.
+// This is not used in the main funcionality of the program. This function aids bug testing and marking of the program.
 void printBooks() {
     const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books.
     for (const Book &book : books) {                // For loop through to print each book for testing purposes. 

@@ -6,7 +6,7 @@
 #include "member.h"
 #include "librarian.h"
 
-//
+// Initialising objects that will be tested using the test cases below.
 Librarian librarianSiri(9998, "Siri", "Apple Ave", "sirihelpline@apple.com", 100000);
 Librarian librarianAlexa(9999, "librarianAlexa", "Amazon Ave", "librarianalexahelpline@aws.com", 100000);
 Member member(101, "David G", "Deadend drive", "davidgamez@live.mdx.ac.uk");
