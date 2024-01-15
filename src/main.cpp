@@ -170,7 +170,7 @@ int main(void) {
 
         case ISSUE_BOOK: // Issue a book to a member functionality.
             int memberIDToIssueABook, bookIDToIssueABook;
-            bool memberIDBoolean, bookIDBoolean;
+            bool memberIDIssueBoolean, bookIDIssueBoolean;
 
             std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
             std::cin >> memberIDToIssueABook;
@@ -183,7 +183,7 @@ int main(void) {
                 std::cout << "Please enter the memberID of the member that wants to borrow a book: ";
                 std::cin >> memberIDToIssueABook;
             }
-            memberIDBoolean = true;
+            memberIDIssueBoolean = true;
 
             std::cout << "Please enter the bookID of the book that is being issued out: ";
             std::cin >> bookIDToIssueABook;
@@ -197,9 +197,9 @@ int main(void) {
                 std::cin >> bookIDToIssueABook;
             }
 
-            bookIDBoolean = true;
+            bookIDIssueBoolean = true;
 
-            if (memberIDBoolean && bookIDBoolean){
+            if (memberIDIssueBoolean && bookIDIssueBoolean){
                 Alexa.issueBook(memberIDToIssueABook, bookIDToIssueABook);
             }
             std::cout << "\n-----------Returning to the menu----------";
@@ -207,6 +207,7 @@ int main(void) {
 
         case RETURN_BOOK: // Return a book from a member functionality.
             int memberIDToReturnABook, bookIDToReturnABook;
+            bool memberIDReturnBoolean, bookIDReturnBoolean;
 
             std::cout << "Please enter the memberID of the member that wants to return a book: ";
             std::cin >> memberIDToReturnABook;
@@ -219,7 +220,7 @@ int main(void) {
                 std::cout << "Please enter the memberID of the member that wants to return a book: ";
                 std::cin >> memberIDToReturnABook;
             }
-            memberIDBoolean = true;
+            memberIDReturnBoolean = true;
 
             std::cout << "Please enter the bookID of the book that is being returned: ";
             std::cin >> bookIDToReturnABook;
@@ -233,10 +234,10 @@ int main(void) {
                 std::cin >> bookIDToReturnABook;
             }
 
-            bookIDBoolean = true;
+            bookIDReturnBoolean = true;
 
-            if (memberIDBoolean && bookIDBoolean){
-                Alexa.returnBook(memberIDToIssueABook, bookIDToIssueABook);
+            if (memberIDReturnBoolean && bookIDReturnBoolean){
+                Alexa.returnBook(memberIDToReturnABook, bookIDToReturnABook);
             }
             std::cout << "\n-----------Returning to the menu----------";
             break;
