@@ -43,11 +43,11 @@ TEST_CASE("Librarian get functionality", "[Librarian]"){
     REQUIRE(librarianAlexa.getAddress() == "Amazon Ave");
     REQUIRE(librarianAlexa.getEmail() == "librarianalexahelpline@aws.com");
     // Librarian Siri.
-    REQUIRE(librarianAlexa.getStaffID() == 9998);
-    REQUIRE(librarianAlexa.getSalary() == 100000);
-    REQUIRE(librarianAlexa.getName() == "Siri");
-    REQUIRE(librarianAlexa.getAddress() == "Apple Ave");
-    REQUIRE(librarianAlexa.getEmail() == "sirihelpline@apple.com");
+    REQUIRE(librarianSiri.getStaffID() == 9998);
+    REQUIRE(librarianSiri.getSalary() == 100000);
+    REQUIRE(librarianSiri.getName() == "Siri");
+    REQUIRE(librarianSiri.getAddress() == "Apple Ave");
+    REQUIRE(librarianSiri.getEmail() == "sirihelpline@apple.com");
 }
 
 // Test case for all accessor functions in the librarian class.
