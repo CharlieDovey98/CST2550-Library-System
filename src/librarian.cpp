@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <ctime>
+#include <cmath>
 #include <limits>
 #include <regex>
 //Include the header files of the classes.
@@ -22,7 +23,7 @@ Librarian::Librarian(int staffID, std::string name, std::string address, std::st
     this->salary = salary;
 }
 
-Librarian Alexa(1001, "Alexa A", "410 Terry Ave N, Seattle 98109, WA.", "reply@amazon.com", 100000);
+Librarian Alexa(1001, "Alexa A", "Amazon Ave", "reply@amazon.com", 100000);
 
 void Librarian::printMemberDetails(int memberID){
     const std::vector<Member> &members = getMemberList();
@@ -80,7 +81,6 @@ void Librarian::addMember(){
               << std::endl;
     getMemberList().push_back(newMember); // Add new Member to the member list vector.
     Alexa.printMemberDetails(memberID);   // Print the members details that were just added to the system.
-    std::cout << "\n-----------Returning to the menu----------";
     memberID += 1;
 }
 
@@ -192,7 +192,6 @@ void Librarian::displayBorrowedBooks(int memberID)
                           << "Author: " << book->getAuthorFirstName() << " " << book->getAuthorLastName() << ", "
                           << "This book is due: " << ctime(&date);
             }
-            std::cout << "\n-----------Returning to the menu----------";
         }
     }
     else
@@ -204,13 +203,15 @@ void Librarian::displayBorrowedBooks(int memberID)
 // A function to Calculate fine if the book is overdue.
 void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     time_t currentTime = time(nullptr); // The current system time.
+    // Add the line of code below to set the fine to being past the due date.
+    // time_t currentTimePlus10 = currentTime + (10 * 24 * 60 * 60);
     std::cout << "Current time of return: " << ctime(&currentTime) << std::endl;
     if (currentTime > bookBeingReturned->getDueDate()){
         double daysLate = difftime(currentTime, bookBeingReturned->getDueDate()) / (60 * 60 * 24);
         double fine = daysLate * 1;
 
         std::cout << "The book is " << daysLate << "days late, incuring a fine of " << fine << std::endl;
-        std::cout << "Fine due: £" << fine << std::endl;
+        std::cout << "Fine due: £" << floor(fine) << std::endl;
         std::cout << "MemberID: " << memberID << "returning: " << bookBeingReturned << std::endl;
     }
     std::cout << "You are within the books due date, so you will not incur a fine" << std::endl;

@@ -1,30 +1,37 @@
 
+# Flags.
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Wpedantic
+# Source directories.
+SRCDIRECTORY = src
+OBJDIRECTORY = object
 
+# Targets.
 all: LibraryManagementSystem Catch2tests
 
-Catch2tests: test.cpp person.o book.o member.o librarian.o
+# Operations.
+Catch2tests: $(SRCDIRECTORY)/test.cpp $(OBJDIRECTORY)/person.o $(OBJDIRECTORY)/book.o $(OBJDIRECTORY)/member.o $(OBJDIRECTORY)/librarian.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-LibraryManagementSystem: main.o person.o book.o member.o librarian.o
+LibraryManagementSystem: $(OBJDIRECTORY)/main.o $(OBJDIRECTORY)/person.o $(OBJDIRECTORY)/book.o $(OBJDIRECTORY)/member.o $(OBJDIRECTORY)/librarian.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIRECTORY)/main.o: $(SRCDIRECTORY)/main.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-person.o: person.cpp person.h
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIRECTORY)/person.o: $(SRCDIRECTORY)/person.cpp $(SRCDIRECTORY)/person.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-book.o: book.cpp book.h
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIRECTORY)/book.o: $(SRCDIRECTORY)/book.cpp $(SRCDIRECTORY)/book.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-member.o: member.cpp member.h
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIRECTORY)/member.o: $(SRCDIRECTORY)/member.cpp $(SRCDIRECTORY)/member.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-librarian.o: librarian.cpp librarian.h
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJDIRECTORY)/librarian.o: $(SRCDIRECTORY)/librarian.cpp $(SRCDIRECTORY)/librarian.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Phony target to clean/ remove files.
 .PHONY: clean
 clean:
-	$(RM) *.o LibraryManagementSystem Catch2tests
+	$(RM) $(OBJDIRECTORY)/*.o LibraryManagementSystem Catch2tests

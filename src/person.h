@@ -12,11 +12,11 @@ protected:
 
 public:
     std::string getName() const;
-    void setName(std::string &name);
+    void setName(std::string name);
     std::string getAddress() const;
-    void setAddress(std::string &address);
+    void setAddress(std::string address);
     std::string getEmail() const;
-    void setEmail(std::string &email);
+    void setEmail(std::string email);
 };
 
 #endif // PERSON_H

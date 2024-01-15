@@ -16,14 +16,14 @@
 
 bool bookDataFileFound = false;
 
-void librarianPortal()
-{
+// A function to print out the librarian object Alexa.
+void librarianPortal() {
     std::cout << "Librarian active: " << Alexa.getName() << ", ID:" << Alexa.getStaffID() << ".";
     std::cout << "\n------------------------------------------" << std::endl;
 }
 
-int startMenu(int menuChoice)
-{
+// A function to print out the main menu to the console.
+int startMenu(int menuChoice) {
     std::cout << "\n-------------------Menu-------------------";
     std::cout << "\nPlease choose from the following options:"
               << "\n    [1] Add a member."
@@ -47,8 +47,8 @@ int startMenu(int menuChoice)
     return menuChoice; // Once a correct input has been attained, return the input.
 }
 
-void attainTheLibraryInformationFile()
-{
+// A function to attain the .csv file, read in its data line by line, and create book objects from the data.
+void attainTheLibraryInformationFile() {
     std::string fileName;
     std::ifstream inputFile;
 
@@ -56,31 +56,29 @@ void attainTheLibraryInformationFile()
     std::getline(std::cin, fileName);
 
     // A validation check using a while loop, guard statement.
-    while (fileName.size() <= 4 || fileName.substr(fileName.size() - 4) != ".csv") // Check if the filename has .csv file extension.
-    {
+    while (fileName.size() <= 4 || fileName.substr(fileName.size() - 4) != ".csv") { // Check if the filename has .csv file extension.
         std::cout << "Invalid file extension. Please ensure the file is a .csv file." << std::endl;
         std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
         std::getline(std::cin, fileName);
     }
-    inputFile.open(fileName); // Attempt to open the file.
+    inputFile.open(fileName); // Attempt to open the filename provided.
 
     // A validation check using a while loop, guard statement.
-    while (!inputFile.is_open()) // If the file name specified cannot be opened, most likely due to the filename being incorrect or the file doesn't exist.
-    {
+    while (!inputFile.is_open()) { // If the file name specified cannot be opened, most likely due to the filename being incorrect or the file doesn't exist.
         std::cout << "Failed to open file: " << fileName << std::endl;
         std::cout << "Please check if the file exists in the current directory." << std::endl;
         std::cout << "Please enter the book data filename for the library management system (e.g. librarybooks.csv): ";
         std::getline(std::cin, fileName);
         inputFile.open(fileName);
     }
+    
     bookDataFileFound = true;
 
     std::string line = "";
     std::getline(inputFile, line); // Attain the first line from the document, the cell headings.
     line = "";                     // Discard the first headings line, as we only want to add books to the book vector.
 
-    while (std::getline(inputFile, line)) // While there are still lines to be read in, within the .csv file, continue.
-    {
+    while (std::getline(inputFile, line)) { // While there are still lines to be read in, within the .csv file, continue.
         int bookID;
         bool isIssued = false;
         std::string bookName;
@@ -92,8 +90,8 @@ void attainTheLibraryInformationFile()
 
         std::stringstream inputString(line);
 
-        getline(inputString, temporaryString, ','); // allocating bookID to a temporary string.
-        bookID = atoi(temporaryString.c_str());     // Converting bookId to an integer.
+        getline(inputString, temporaryString, ','); // Allocating bookID to a temporary string.
+        bookID = atoi(temporaryString.c_str());     // Converting bookId to an integer from the temporary string.
         getline(inputString, bookName, ',');
         getline(inputString, pageCount, ',');
         getline(inputString, authorFirstName, ',');
@@ -107,12 +105,10 @@ void attainTheLibraryInformationFile()
     std::cout << "\nBooks added successfully\n";
 }
 
-void printBooks()
-{
+void printBooks() {
     const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books.
-    for (const Book &book : books)                  // For loop through to print each book for testing purposes. 
+    for (const Book &book : books) {                // For loop through to print each book for testing purposes. 
     // This is not used in the main funcionality of the program. This aids bug testing.
-    {
         std::cout << "Book ID: " << book.getBookID() << ", "
                   << book.getBookName() << ", "
                   << book.getAuthorFirstName() << ", "
@@ -121,18 +117,16 @@ void printBooks()
     }
 }
 
-int main(void)
-{
-    while (true) // A while loop to loop on the menu. unneccessary? try to depricate before submission? ####
-    {
+// The main function of my code.
+int main(void) {
+    while (true) { // A while loop to loop on the main code.
 
         int menuChoice;
         std::cout << "\nLibrary Management System V1.\n"
                   << std::endl;
         librarianPortal();
 
-        if (bookDataFileFound == false)
-        {
+        if (bookDataFileFound == false){
             // A call the to the function to attain the library's book information.
             attainTheLibraryInformationFile();
             // A call to the function to print the now attained books the library system has in stock.
@@ -140,22 +134,27 @@ int main(void)
         }
 
         menuChoice = startMenu(menuChoice);
-        
-        if (menuChoice == 1) // Add a member functionality.
-        {
-            Alexa.addMember(); // Using librarian Alexa to add a new member.
-        }
+        const int ADD_MEMBER = 1;
+        const int BORROWED_BOOKS = 2;
+        const int ISSUE_BOOK = 3;
+        const int RETURN_BOOK = 4;
+        const int EXIT_SYSTEM = 5;
 
-        if (menuChoice == 2) // View a members borrowed books functionality.
-        {
+        switch (menuChoice){
+
+        case ADD_MEMBER:      // Add a member functionality.
+            Alexa.addMember(); // Using librarian Alexa to add a new member.
+            std::cout << "\n-----------Returning to the menu----------";
+            break;
+
+        case BORROWED_BOOKS: // View a members borrowed books functionality.
             int memberIDForBorrowedBooks;
 
             std::cout << "Please enter the member's ID to view their currently borrowed books: ";
             std::cin >> memberIDForBorrowedBooks;
 
             // A validation check using a while loop, guard statement.
-            while (std::cin.fail() || Alexa.findMember(memberIDForBorrowedBooks) == nullptr) // If memberID doesn't exist or std::cin fails.
-            {
+            while (std::cin.fail() || Alexa.findMember(memberIDForBorrowedBooks) == nullptr){ // If memberID doesn't exist or std::cin fails.
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -163,10 +162,10 @@ int main(void)
                 std::cin >> memberIDForBorrowedBooks;
             }
             Alexa.displayBorrowedBooks(memberIDForBorrowedBooks);
-        }
+            std::cout << "\n-----------Returning to the menu----------";
+            break;
 
-        if (menuChoice == 3) // Issue a book to a member functionality.
-        {
+        case ISSUE_BOOK: // Issue a book to a member functionality.
             int memberIDToIssueABook, bookIDToIssueABook;
             bool memberIDBoolean, bookIDBoolean;
 
@@ -174,8 +173,7 @@ int main(void)
             std::cin >> memberIDToIssueABook;
 
             // A validation check using a while loop, guard statement.
-            while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
-            {
+            while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr){ // If memberID doesn't exist or std::cin fails.
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -188,8 +186,7 @@ int main(void)
             std::cin >> bookIDToIssueABook;
 
             // A validation check using a while loop, guard statement.
-            while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
-            {
+            while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr){ // If bookID doesn't exist or std::cin fails.
                 std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -199,56 +196,52 @@ int main(void)
 
             bookIDBoolean = true;
 
-            if (memberIDBoolean && bookIDBoolean)
-            {
+            if (memberIDBoolean && bookIDBoolean){
                 Alexa.issueBook(memberIDToIssueABook, bookIDToIssueABook);
             }
-        }
+            std::cout << "\n-----------Returning to the menu----------";
+            break;
 
-        if (menuChoice == 4) // Return a book from a member functionality.
-        {
-            int memberIDToIssueABook, bookIDToIssueABook;
-            bool memberIDBoolean, bookIDBoolean;
+        case RETURN_BOOK: // Return a book from a member functionality.
+            int memberIDToReturnABook, bookIDToReturnABook;
 
             std::cout << "Please enter the memberID of the member that wants to return a book: ";
-            std::cin >> memberIDToIssueABook;
+            std::cin >> memberIDToReturnABook;
 
             // A validation check using a while loop, guard statement.
-            while (std::cin.fail() || Alexa.findMember(memberIDToIssueABook) == nullptr) // If memberID doesn't exist or std::cin fails.
-            {
+            while (std::cin.fail() || Alexa.findMember(memberIDToReturnABook) == nullptr){ // If memberID doesn't exist or std::cin fails.
                 std::cout << "Invalid memberID. Please enter the memberID in numbers, of a registered member." << std::endl;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Please enter the memberID of the member that wants to return a book: ";
-                std::cin >> memberIDToIssueABook;
+                std::cin >> memberIDToReturnABook;
             }
             memberIDBoolean = true;
 
             std::cout << "Please enter the bookID of the book that is being returned: ";
-            std::cin >> bookIDToIssueABook;
+            std::cin >> bookIDToReturnABook;
 
             // A validation check using a while loop, guard statement.
-            while (std::cin.fail() || Alexa.findBook(bookIDToIssueABook) == nullptr) // If bookID doesn't exist or std::cin fails.
-            {
+            while (std::cin.fail() || Alexa.findBook(bookIDToReturnABook) == nullptr){ // If bookID doesn't exist or std::cin fails.
                 std::cout << "Invalid bookID. Please enter the bookID in numbers, of a in stock library book." << std::endl;
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Please enter the bookID of the book that is being returned: ";
-                std::cin >> bookIDToIssueABook;
+                std::cin >> bookIDToReturnABook;
             }
 
             bookIDBoolean = true;
 
-            if (memberIDBoolean && bookIDBoolean)
-            {
+            if (memberIDBoolean && bookIDBoolean){
                 Alexa.returnBook(memberIDToIssueABook, bookIDToIssueABook);
             }
-        }
+            // std::cout << "\n-----------Returning to the menu----------";
+            break;
 
-        if (menuChoice == 5) // Exit the system functionality.
-        {
-            std::cout << "System Exiting" << std::endl;
+        case EXIT_SYSTEM: // Exit the system functionality.
+            std::cout << "-----------System Exiting-----------" << std::endl;
             exit(0);
+            break;
         }
     }
 }
