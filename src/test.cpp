@@ -1,17 +1,19 @@
 #define CATCH_CONFIG_MAIN
+// Include all the libraries for the code to run.
 #include "catch.hpp"
 #include "person.h"
 #include "book.h"
 #include "member.h"
 #include "librarian.h"
 
+//
 Librarian librarianSiri(9998, "Siri", "Apple Ave", "sirihelpline@apple.com", 100000);
 Librarian librarianAlexa(9999, "librarianAlexa", "Amazon Ave", "librarianalexahelpline@aws.com", 100000);
 Member member(101, "David G", "Deadend drive", "davidgamez@live.mdx.ac.uk");
 Book book(100, "The Test Book", "Testing", "Author", false);
 Person person;
 
-// Test case for all get functions in the Book class.
+// Test case for all accessor functions in the Book class.
 TEST_CASE("Book get functionality", "[Book]"){
     REQUIRE(book.getBookID() == "100");
     REQUIRE(book.getBookName() == "The Test Book");
@@ -20,7 +22,7 @@ TEST_CASE("Book get functionality", "[Book]"){
     REQUIRE(book.isBookIssued() == false);
 }
 
-// Test case for all get functions in the member class.
+// Test case for all accessor functions in the member class.
 TEST_CASE("Member get functionality", "[Member]"){
     REQUIRE(member.getMemberID() == "101");
     REQUIRE(member.getName() == "David G");
@@ -32,24 +34,30 @@ TEST_CASE("Member get functionality", "[Member]"){
     // REQUIRE(member.getName() == "Charlie Dovey");
 }
 
-// Test case for all get functions in the librarian class.
+// Test case for all accessor functions in the librarian class.
 TEST_CASE("Librarian get functionality", "[Librarian]"){
+    // Librarian Alexa.
     REQUIRE(librarianAlexa.getStaffID() == 9999);
     REQUIRE(librarianAlexa.getSalary() == 100000);
     REQUIRE(librarianAlexa.getName() == "librarianAlexa");
     REQUIRE(librarianAlexa.getAddress() == "Amazon Ave");
     REQUIRE(librarianAlexa.getEmail() == "librarianalexahelpline@aws.com");
+    // Librarian Siri.
+    REQUIRE(librarianAlexa.getStaffID() == 9998);
+    REQUIRE(librarianAlexa.getSalary() == 100000);
+    REQUIRE(librarianAlexa.getName() == "Siri");
+    REQUIRE(librarianAlexa.getAddress() == "Apple Ave");
+    REQUIRE(librarianAlexa.getEmail() == "sirihelpline@apple.com");
 }
 
-// Test case for all get functions in the librarian class.
+// Test case for all accessor functions in the librarian class.
 TEST_CASE("Person set and get functionality", "[Person]"){
-    Person newperson;
-    newperson.setName("Charlie");
-    newperson.setAddress("MDX Library");
-    newperson.setEmail("cd908@live.mdx.ac.uk");
-    REQUIRE(newperson.getName() == "Charlie");
-    REQUIRE(newperson.getAddress() == "MDX Library");
-    REQUIRE(newperson.getEmail() == "cd908@live.mdx.ac.uk");
+    person.setName("Charlie");
+    person.setAddress("MDX Library");
+    person.setEmail("cd908@live.mdx.ac.uk");
+    REQUIRE(person.getName() == "Charlie");
+    REQUIRE(person.getAddress() == "MDX Library");
+    REQUIRE(person.getEmail() == "cd908@live.mdx.ac.uk");
     // Adding wrong test cases as an example.
     // Uncomment the below REQUIRE statements to see the test fail in the Catch2tests.exe
     // REQUIRE(newperson.getName() == "Sam");
@@ -57,7 +65,7 @@ TEST_CASE("Person set and get functionality", "[Person]"){
     // REQUIRE(newperson.getEmail() == "cd9999@live.mdx.ac.uk");
 }
 
-// Test case for adding members.
+// Test case for adding member objects to memory.
 TEST_CASE("Librarian add member tests", "[Librarian]"){
     Member member(102, "Ahmed", "Roundabout road", "Ahmed@outlook.co.uk");
     Member newMember(103, "Ali", "Long Lane", "Ali@live.mdx.ac.uk");

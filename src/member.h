@@ -6,9 +6,10 @@
 #include <vector>
 #include "person.h"
 
-// Forward declaration to fix any circular dependancies, causing compiling errors.
+// Forward declaration of the book class to fix any circular dependancies, causing compiling errors.
 class Book;
 
+// Declaring the member class' variables, methods and identifiers.
 class Member : public Person{
 private:
     int memberID;

@@ -4,6 +4,7 @@
 
 #include <string>
 
+// Declaring the person class' variables, methods and identifiers.
 class Person{
 protected:
     std::string name;

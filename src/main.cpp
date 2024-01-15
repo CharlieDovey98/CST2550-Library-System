@@ -14,6 +14,7 @@
 #include "member.h"
 #include "librarian.h"
 
+// declaring a global variable to check whether the books have been read in from the .csv file or not.
 bool bookDataFileFound = false;
 
 // A function to print out the librarian object Alexa.
@@ -36,8 +37,7 @@ int startMenu(int menuChoice) {
     std::cin >> menuChoice;
 
     // A validation check using a while loop, guard statement.
-    while (std::cin.fail() || menuChoice < 1 || menuChoice > 5) // If the input is not an integer or is out of range get a new input from the user.
-    {
+    while (std::cin.fail() || menuChoice < 1 || menuChoice > 5) {// If the input is not an integer or is out of range get a new input from the user.
         std::cout << "Invalid choice. Please enter a number between 1 and 5." << std::endl;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -105,10 +105,12 @@ void attainTheLibraryInformationFile() {
     std::cout << "\nBooks added successfully\n";
 }
 
+// This function prints out each line of the .csv file after the file has successfully been opened and read.
+// This is not used in the main funcionality of the program. This function aids bug testing.
 void printBooks() {
     const std::vector<Book> &books = getBookList(); // Use the getBookList() to access the vector of books.
     for (const Book &book : books) {                // For loop through to print each book for testing purposes. 
-    // This is not used in the main funcionality of the program. This aids bug testing.
+    
         std::cout << "Book ID: " << book.getBookID() << ", "
                   << book.getBookName() << ", "
                   << book.getAuthorFirstName() << ", "
@@ -129,8 +131,8 @@ int main(void) {
         if (bookDataFileFound == false){
             // A call the to the function to attain the library's book information.
             attainTheLibraryInformationFile();
-            // A call to the function to print the now attained books the library system has in stock.
-            printBooks();
+            // A call to the function printBooks to print the now attained books the library system has in stock.
+            // printBooks();
         }
 
         menuChoice = startMenu(menuChoice);
@@ -140,6 +142,7 @@ int main(void) {
         const int RETURN_BOOK = 4;
         const int EXIT_SYSTEM = 5;
 
+        // A switch case on the user input menuChoice to run the part of the program the user has selected.
         switch (menuChoice){
 
         case ADD_MEMBER:      // Add a member functionality.
@@ -235,7 +238,7 @@ int main(void) {
             if (memberIDBoolean && bookIDBoolean){
                 Alexa.returnBook(memberIDToIssueABook, bookIDToIssueABook);
             }
-            // std::cout << "\n-----------Returning to the menu----------";
+            std::cout << "\n-----------Returning to the menu----------";
             break;
 
         case EXIT_SYSTEM: // Exit the system functionality.

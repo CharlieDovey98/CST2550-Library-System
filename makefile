@@ -1,4 +1,3 @@
-
 # Flags.
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Wpedantic
@@ -31,7 +30,7 @@ $(OBJDIRECTORY)/member.o: $(SRCDIRECTORY)/member.cpp $(SRCDIRECTORY)/member.h
 $(OBJDIRECTORY)/librarian.o: $(SRCDIRECTORY)/librarian.cpp $(SRCDIRECTORY)/librarian.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Phony target to clean/ remove files.
+# A Phony target to clean/ remove all .o and .exe files.
 .PHONY: clean
 clean:
 	$(RM) $(OBJDIRECTORY)/*.o LibraryManagementSystem Catch2tests

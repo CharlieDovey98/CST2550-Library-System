@@ -15,6 +15,7 @@
 
 int memberID = 101;
 
+// The constructor for the librarian object.
 Librarian::Librarian(int staffID, std::string name, std::string address, std::string email, int salary){
     this->staffID = staffID;
     this->setName(name);
@@ -25,6 +26,7 @@ Librarian::Librarian(int staffID, std::string name, std::string address, std::st
 
 Librarian Alexa(1001, "Alexa A", "Amazon Ave", "reply@amazon.com", 100000);
 
+// A function to print out out the members details. This function uses the get methods from the member class.
 void Librarian::printMemberDetails(int memberID){
     const std::vector<Member> &members = getMemberList();
     std::string memberIDToString = std::to_string(memberID);
@@ -42,6 +44,7 @@ void Librarian::printMemberDetails(int memberID){
     std::cout << "Member with ID " << memberID << " not found." << std::endl;
 }
 
+// A function to add members to the system and store them in memory.
 void Librarian::addMember(){
     std::string memberName, memberAddress, memberEmail;
     // Below are Regex pattern expressions to validate the user input.
@@ -84,6 +87,7 @@ void Librarian::addMember(){
     memberID += 1;
 }
 
+// A function to find a member by id, within the member vector stored in memory.
 Member *Librarian::findMember(int memberID){
     std::vector<Member> &members = getMemberList();
     std::string memberIDAsAString = std::to_string(memberID);
@@ -97,6 +101,7 @@ Member *Librarian::findMember(int memberID){
     return nullptr; // Return nullptr if no member with the user input memberID is found.
 }
 
+// A function to find a book by its id, within the book vector stored in memory.
 Book *Librarian::findBook(int bookID){
     std::vector<Book> &books = getBookList();
     std::string bookIDAsAString = std::to_string(bookID);
@@ -110,8 +115,8 @@ Book *Librarian::findBook(int bookID){
     return nullptr; // Return nullptr if no book with the user input bookID is found.
 }
 
-void Librarian::issueBook(int memberID, int bookID)
-{
+// A function to issue a book to a member using memberid and bookid.
+void Librarian::issueBook(int memberID, int bookID){
     Member *memberBorrowingBook = findMember(memberID);
     Book *bookToBorrow = findBook(bookID);
 
@@ -139,15 +144,15 @@ void Librarian::issueBook(int memberID, int bookID)
     }
 }
 
+// A function to return a book from a member. this will change the book objects boolean value from true back to false, allowing it to be rented again.
 void Librarian::returnBook(int memberID, int bookID){
-    // Find the member and the book by their IDs.
-    Member* memberReturningBook = findMember(memberID);
+    Member* memberReturningBook = findMember(memberID); // Find the member from the parameter given when calling the function.
     if (!memberReturningBook) {
         std::cout << "Member with ID " << memberID << " not found." << std::endl;
         return;
     }
 
-    Book* bookBeingReturned = findBook(bookID);
+    Book* bookBeingReturned = findBook(bookID); // Find the book from the parameter given when calling the function.
     if (!bookBeingReturned) {
         std::cout << "Book with ID " << bookID << " not found." << std::endl;
         return;
@@ -163,15 +168,14 @@ void Librarian::returnBook(int memberID, int bookID){
         borrowedBooks.erase(bookSearch);// Remove the book from the member's borrowed books.
         calculateFine(memberID, bookBeingReturned); // Calculate the fine for the member if the book is past its due date.
         bookBeingReturned->returnBook(bookID, memberID); // Return the book.
-        bookBeingReturned->setBookAsIssued(false);
+        bookBeingReturned->setBookAsIssued(false); // set the bookIssued boolean back to false allowing it to be loaned by another member.
     } else {
         std::cout << "Member ID " << memberID << " did not borrow book ID " << bookID << std::endl;
     }
 }
 
-void Librarian::displayBorrowedBooks(int memberID)
-{
-    
+// A function to display all borrowed books by a member using their memberid.
+void Librarian::displayBorrowedBooks(int memberID){
     Member *member = Alexa.findMember(memberID);
     if (member != nullptr) // If member is not equal to nullpointer.
     {
@@ -200,11 +204,13 @@ void Librarian::displayBorrowedBooks(int memberID)
     }
 }
 
-// A function to Calculate fine if the book is overdue.
+// A function to Calculate a fine if the book is overdue, past the three day loan period.
 void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     time_t currentTime = time(nullptr); // The current system time.
+
     // Add the line of code below to set the fine to being past the due date.
     // time_t currentTimePlus10 = currentTime + (10 * 24 * 60 * 60);
+
     std::cout << "Current time of return: " << ctime(&currentTime) << std::endl;
     if (currentTime > bookBeingReturned->getDueDate()){
         double daysLate = difftime(currentTime, bookBeingReturned->getDueDate()) / (60 * 60 * 24);
@@ -217,18 +223,22 @@ void Librarian::calculateFine(int memberID, Book* bookBeingReturned){
     std::cout << "You are within the books due date, so you will not incur a fine" << std::endl;
 }
 
+// An accessor method to attain the staff id of a librarian object.
 int Librarian::getStaffID(){
     return staffID;
 }
 
+// A mutator method to set the staff id of a librarian object.
 void Librarian::setStaffID(int staffID){
     this->staffID = staffID;
 }
 
+// An accessor method to attain the salary of a librarian object.
 int Librarian::getSalary(){
     return salary;
 }
 
+// A mutator method to set the librarian objects salary.
 void Librarian::setSalary(int salary){
     this->salary = salary;
 }

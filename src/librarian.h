@@ -9,6 +9,7 @@
 #include "member.h"
 #include "book.h"
 
+// Declaring the librarian class' variables, methods and identifiers.
 class Librarian : public Person{
 private:
     int staffID;
@@ -30,7 +31,7 @@ public:
     Member* findMember(int memberID);
 };
 
-// Declare Alexa as an external variable so it can be called in the main.cpp file.
+// Declare the librarian Alexa as an external variable so it can be called in the main.cpp file.
 extern Librarian Alexa;
 
 #endif // LIBRARIAN_H

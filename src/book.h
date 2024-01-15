@@ -8,6 +8,7 @@
 #include <vector>
 #include "member.h"
 
+// Declaring the book class' variables, methods and identifiers.
 class Book{
 private:
     int bookID;
